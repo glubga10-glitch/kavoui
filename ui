@@ -12,20 +12,20 @@ local Utility = {}
 local Objects = {}
 function Kavo:DraggingEnabled(frame, parent)
     parent = parent or frame
-    
+    local UIS = game:GetService("UserInputService")
     local dragging = false
     local dragInput = nil
     local startPos = nil
     local startFramePos = nil
 
+    -- Start drag on mouse button OR touch
     frame.InputBegan:Connect(function(input)
-        -- Check for mouse button 1 OR touch
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
             dragging = true
             startPos = input.Position
             startFramePos = parent.Position
-            dragInput = input
-            
+
+            -- Stop drag when input ends
             input.Changed:Connect(function()
                 if input.UserInputState == Enum.UserInputState.End then
                     dragging = false
@@ -35,8 +35,15 @@ function Kavo:DraggingEnabled(frame, parent)
         end
     end)
 
-    -- Listen for input changes globally to track movement of the active input
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
+    -- Capture the movement input (mouse movement OR touch movement)
+    frame.InputChanged:Connect(function(input)
+        if (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) and dragging then
+            dragInput = input
+        end
+    end)
+
+    -- Update position based on movement
+    UIS.InputChanged:Connect(function(input)
         if input == dragInput and dragging then
             local delta = input.Position - startPos
             parent.Position = UDim2.new(
