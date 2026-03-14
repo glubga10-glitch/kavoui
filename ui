@@ -1,5 +1,5 @@
---// to the 2 peoplee who are constantly watching this repo, get a life yall weird.
---// to the people who are still forking this unoptimized garbage, if you want a custom optimized rewrite for $, hmu on discord: federal6768 or federal.
+
+
 
 local Kavo = {}
 
@@ -18,14 +18,14 @@ function Kavo:DraggingEnabled(frame, parent)
     local startPos = nil
     local startFramePos = nil
 
-    -- Start drag on mouse button OR touch
+   
     frame.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
             dragging = true
             startPos = input.Position
             startFramePos = parent.Position
 
-            -- Stop drag when input ends
+           
             input.Changed:Connect(function()
                 if input.UserInputState == Enum.UserInputState.End then
                     dragging = false
@@ -35,14 +35,14 @@ function Kavo:DraggingEnabled(frame, parent)
         end
     end)
 
-    -- Capture the movement input (mouse movement OR touch movement)
+   
     frame.InputChanged:Connect(function(input)
         if (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) and dragging then
             dragInput = input
         end
     end)
 
-    -- Update position based on movement
+    
     UIS.InputChanged:Connect(function(input)
         if input == dragInput and dragging then
             local delta = input.Position - startPos
