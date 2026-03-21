@@ -136,12 +136,12 @@ local themeStyles = {
     },
     -- NEW DIO THEME (goldish yellowish)
     Dio = {
-        SchemeColor = Color3.fromRGB(255, 215, 0),      -- bright gold
-        Background = Color3.fromRGB(20, 20, 20),       -- dark background
-        Header = Color3.fromRGB(30, 30, 30),           -- slightly lighter header
-        TextColor = Color3.fromRGB(255, 255, 255),     -- white text
-        ElementColor = Color3.fromRGB(40, 40, 40)      -- dark element background
-    }
+    SchemeColor = Color3.fromRGB(255, 215, 0),      -- bright gold accent
+    Background = Color3.fromRGB(255, 245, 200),     -- light creamy yellow background
+    Header = Color3.fromRGB(245, 225, 150),         -- slightly darker yellow for header
+    TextColor = Color3.fromRGB(40, 40, 40),         -- dark text for contrast
+    ElementColor = Color3.fromRGB(250, 240, 210)    -- light yellow for element backgrounds
+}
 }
 
 
