@@ -230,7 +230,7 @@ function Kavo.CreateLib(kavName, themeList)
     local MainSide = Instance.new("Frame")
     local sideCorner = Instance.new("UICorner")
     local coverup_2 = Instance.new("Frame")
-    local tabFrames = Instance.new("Frame")
+    local tabFrames = Instance.new("ScrollingFrame")  -- CHANGED: now a ScrollingFrame
     local tabListing = Instance.new("UIListLayout")
     local pages = Instance.new("Frame")
     local Pages = Instance.new("Folder")
@@ -337,16 +337,30 @@ function Kavo.CreateLib(kavName, themeList)
     coverup_2.Position = UDim2.new(0.949939311, 0, 0, 0)
     coverup_2.Size = UDim2.new(0, 7, 0, 289)
 
+    -- ========== SCROLLING TABS ==========
     tabFrames.Name = "tabFrames"
     tabFrames.Parent = MainSide
     tabFrames.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     tabFrames.BackgroundTransparency = 1.000
     tabFrames.Position = UDim2.new(0.0438990258, 0, -0.00066378375, 0)
     tabFrames.Size = UDim2.new(0, 135, 0, 283)
+    tabFrames.ScrollBarThickness = 4
+    tabFrames.CanvasSize = UDim2.new(0, 0, 0, 0)
+    tabFrames.ClipsDescendants = true
+    -- Optional: make scrollbar match theme
+    -- tabFrames.ScrollBarImageColor3 = themeList.SchemeColor
 
     tabListing.Name = "tabListing"
     tabListing.Parent = tabFrames
     tabListing.SortOrder = Enum.SortOrder.LayoutOrder
+
+    -- Auto-update canvas size when content changes
+    local function updateTabCanvas()
+        tabFrames.CanvasSize = UDim2.new(0, 0, 0, tabListing.AbsoluteContentSize.Y)
+    end
+    tabListing:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateTabCanvas)
+    updateTabCanvas()
+    -- ====================================
 
     pages.Name = "pages"
     pages.Parent = Main
